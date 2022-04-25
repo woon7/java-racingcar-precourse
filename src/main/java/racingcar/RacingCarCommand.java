@@ -1,5 +1,7 @@
 package racingcar;
 
+import camp.nextstep.edu.missionutils.Randoms;
+
 public class RacingCarCommand {
 
     private static final int MIN_COMMAND_NUMBER = 0;
@@ -12,15 +14,24 @@ public class RacingCarCommand {
 
     private final int command;
 
-    public RacingCarCommand(String command) {
-        int parsedCommand = StringUtils.toIntDigit(command);
-        if (!validationCommandNumber(parsedCommand)) {
-            throw new IllegalArgumentException(ErrorMessageUtils.createMessage("0 ~ 9 사이의 숫자를 입력해주세요."));
-        }
-        this.command = parsedCommand;
+    public RacingCarCommand(int command) {
+        validationCommandNumber(command);
+        this.command = command;
     }
 
-    private boolean validationCommandNumber(int command) {
+    public RacingCarCommand() {
+        int command = Randoms.pickNumberInRange(MIN_COMMAND_NUMBER, MAX_COMMAND_NUMBER);
+        validationCommandNumber(command);
+        this.command = command;
+    }
+
+    private void validationCommandNumber(int command) {
+        if (!validationCommandNumberRange(command)) {
+            throw new IllegalArgumentException(ErrorMessage.RACING_CAR_NUMBER_ERROR);
+        }
+    }
+
+    private boolean validationCommandNumberRange(int command) {
         return command >= MIN_COMMAND_NUMBER && command <= MAX_COMMAND_NUMBER;
     }
 

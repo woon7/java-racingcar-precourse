@@ -1,23 +1,29 @@
 package racingcar;
 
-public enum RacingCarStatus {
+public class RacingCarStatus implements Comparable<RacingCarStatus> {
 
-    MOVE, STOP;
+    private int distance;
 
-    static RacingCarStatus of(RacingCarCommand racingCarCommand) {
-        if (racingCarCommand.isMoveCommand())
-            return MOVE;
-        if (racingCarCommand.isStopCommand())
-            return STOP;
-        throw new IllegalStateException(ErrorMessageUtils.createMessage("정의되지 않은 Status 입니다."));
+    private static final String MOVE_STATUS_SYMBOL = "-";
+
+    public void move() {
+        this.distance++;
     }
 
-    public static boolean isMoveStatus(RacingCarStatus racingCarStatus) {
-        return racingCarStatus == MOVE;
+    @Override
+    public int compareTo(RacingCarStatus racingCarStatus) {
+        return Integer.compare(this.distance, racingCarStatus.distance);
     }
 
-    public static boolean isStopStatus(RacingCarStatus racingCarStatus) {
-        return racingCarStatus == STOP;
+    @Override
+    public String toString() {
+        if (distance == 0) {
+            return "";
+        }
+        StringBuilder stringBuilder = new StringBuilder();
+        for (int i = 0; i < distance; i++) {
+            stringBuilder.append(MOVE_STATUS_SYMBOL);
+        }
+        return stringBuilder.toString();
     }
-
 }

@@ -6,17 +6,20 @@ public class RacingCarName {
 
     private final String racingCarName;
 
-    public String getRacingCarName() {
-        return racingCarName;
-    }
-
     public RacingCarName(String racingCarName) {
-        if (!validateRacingCarName(racingCarName))
-            throw new IllegalArgumentException(ErrorMessageUtils.createMessage("자동차 이름을 5글자 이내로 입력해주세요."));
+        if (!validateRacingCarName(racingCarName)) {
+            System.out.println(ErrorMessage.RACING_CAR_NAME_LENGTH_ERROR);
+            throw new IllegalArgumentException(ErrorMessage.RACING_CAR_NAME_LENGTH_ERROR);
+        }
         this.racingCarName = racingCarName;
     }
 
     private static boolean validateRacingCarName(String racingCarName) {
         return racingCarName.length() < MAX_NAME_LENGTH;
+    }
+
+    @Override
+    public String toString() {
+        return racingCarName;
     }
 }
